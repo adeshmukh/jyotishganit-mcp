@@ -2,11 +2,13 @@
 
 from __future__ import annotations
 
+import dataclasses
 import functools
 from datetime import datetime
 from typing import TYPE_CHECKING
 
 from jyotishganit import calculate_birth_chart
+from jyotishganit.core.models import Person
 
 if TYPE_CHECKING:
     from jyotishganit.core.models import VedicBirthChart
@@ -46,8 +48,14 @@ def get_birth_chart(
     location_name: str | None = None,
     name: str | None = None,
 ) -> VedicBirthChart:
-    """Return a Vedic birth chart, using LRU cache for same birth details."""
-    return _get_birth_chart_cached(
+    """Return a Vedic birth chart, using LRU cache for same birth details.
+
+    The cache key is (birth_date, lat, lon, timezone_offset) only; name and
+    location_name do not affect calculations. If the caller provides name,
+    the returned chart's person is patched so the full JSON-LD has the
+    correct label. (location_name is not stored by jyotishganit's Person.)
+    """
+    chart = _get_birth_chart_cached(
         birth_date.year,
         birth_date.month,
         birth_date.day,
@@ -58,6 +66,18 @@ def get_birth_chart(
         longitude,
         timezone_offset,
     )
+    if name is not None and name != "":
+        p = chart.person
+        new_person = Person(
+            birth_datetime=p.birth_datetime,
+            latitude=p.latitude,
+            longitude=p.longitude,
+            timezone_offset=p.timezone_offset,
+            timezone=p.timezone,
+            name=name,
+        )
+        chart = dataclasses.replace(chart, person=new_person)
+    return chart
 
 
 def clear_cache() -> None:

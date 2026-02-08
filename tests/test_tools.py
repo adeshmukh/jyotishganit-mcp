@@ -39,6 +39,14 @@ def test_calculate_birth_chart_returns_valid_json() -> None:
     assert "d1_chart" in data or "d1Chart" in data or "d1_chart" in str(data).lower()
 
 
+def test_calculate_birth_chart_passes_through_name() -> None:
+    """calculate_birth_chart includes caller-provided name in person metadata."""
+    clear_cache()
+    result = calculate_birth_chart(**{**BIRTH, "name": "Bhampu"})
+    data = json.loads(result)
+    assert data["person"]["name"] == "Bhampu"
+
+
 def test_get_panchanga_returns_expected_fields() -> None:
     """get_panchanga returns tithi, nakshatra, yoga, karana, vaara."""
     clear_cache()
