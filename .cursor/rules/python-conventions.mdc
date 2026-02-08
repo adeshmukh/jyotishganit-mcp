@@ -1,0 +1,28 @@
+---
+description: Python style and tooling for this project
+globs: "**/*.py"
+alwaysApply: false
+---
+
+# Python Conventions
+
+## Layout and Imports
+
+- Source code lives in **src-layout**: `src/jyotishganit_mcp/`. Tests live in `tests/` and import the package (no relative imports from repo root into the package).
+- Use absolute imports within the package (e.g. `from jyotishganit_mcp.server import ...`).
+
+## Type Hints and Docstrings
+
+- Use type hints for all function parameters and return values. Use `from __future__ import annotations` in modules that need forward references.
+- Add docstrings (Google or NumPy style) for all public APIs (tools, resources, and exported functions).
+
+## Tooling
+
+- **Ruff**: Linting (`ruff check`) and formatting (`ruff format`). CI runs `ruff check` and `ruff format --check`. Fix with `ruff check --fix` and `ruff format`.
+- **mypy**: Type checking. CI runs `mypy src/`. Keep `src/` strict; use `# type: ignore` only with a short comment when necessary.
+- **pytest**: Test runner. Use `tests/test_*.py`. Async tests: use `pytest-asyncio` and mark with `@pytest.mark.asyncio`.
+
+## Style
+
+- Follow Ruff’s default rules and line length from `pyproject.toml`.
+- Prefer small, focused functions. Keep MCP tool handlers thin: parse input, call jyotishganit or internal helpers, return structured results.
