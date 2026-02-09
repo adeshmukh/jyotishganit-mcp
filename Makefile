@@ -1,5 +1,5 @@
 # Self-documenting: run "make" or "make help" to list targets.
-.PHONY: help install install-dev check lint format typecheck test
+.PHONY: help install install-dev check lint format typecheck test mcp-cursor
 
 help:
 	@echo "Targets:"
@@ -25,3 +25,6 @@ typecheck: ## Run mypy on src
 
 test: ## Run pytest
 	pytest
+
+mcp-cursor: ## Register this MCP server with Cursor (~/.cursor/mcp.json)
+	python scripts/register_mcp_cursor.py
