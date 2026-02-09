@@ -14,13 +14,20 @@ def main() -> None:
             data = json.load(f)
     if "mcpServers" not in data:
         data["mcpServers"] = {}
+
+    repo_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    hip_main_dat = os.path.join(repo_root, "hip_main.dat")
+
     data["mcpServers"]["jyotishganit"] = {
         "command": sys.executable,
         "args": ["-m", "jyotishganit_mcp"],
+        "env": {"JYOTISHGANIT_HIP_MAIN_DAT": hip_main_dat},
     }
+
     with open(path, "w") as f:
         json.dump(data, f, indent=2)
     print("Registered jyotishganit MCP in", path)
+    print("  env JYOTISHGANIT_HIP_MAIN_DAT =", hip_main_dat)
 
 
 if __name__ == "__main__":

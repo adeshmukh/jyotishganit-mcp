@@ -80,4 +80,27 @@ pip install -e ".[dev]"
 - **Type check:** mypy src/
 - **Tests:** pytest (first run may download ephemeris data)
 
+## Offline / local Hipparcos data
+
+Birth chart and panchanga calculations need the Hipparcos star catalog (`hip_main.dat`). By default, jyotishganit (via Skyfield) tries to download it from CDS. If you already have `hip_main.dat` on disk (e.g. in this repo) and want to avoid the download or run without network access, set:
+
+```bash
+export JYOTISHGANIT_HIP_MAIN_DAT=/path/to/hip_main.dat
+```
+
+Then start the MCP server (or run your script) with this env var set. For Cursor, you can set it in the MCP server config using `env`:
+
+```json
+{
+  "mcpServers": {
+    "jyotishganit": {
+      "command": "jyotishganit-mcp",
+      "env": {
+        "JYOTISHGANIT_HIP_MAIN_DAT": "/absolute/path/to/hip_main.dat"
+      }
+    }
+  }
+}
+```
+
 See the [jyotishganit](https://pypi.org/project/jyotishganit/) documentation for the underlying calculation library.
