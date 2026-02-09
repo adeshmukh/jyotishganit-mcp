@@ -5,17 +5,10 @@ import json
 from jyotishganit_mcp.chart_cache import clear_cache
 from jyotishganit_mcp.server import (
     calculate_birth_chart,
-    get_ascendant,
-    get_ashtakavarga,
-    get_ayanamsa,
     get_dashas,
     get_divisional_chart,
-    get_houses_summary,
     get_panchanga,
-    get_planetary_aspects,
     get_planetary_positions,
-    get_shadbala,
-    get_sunrise_sunset,
 )
 
 # Known birth data from jyotishganit docs: Karmala, India
