@@ -2,6 +2,9 @@
 
 from __future__ import annotations
 
+# Use local hip_main.dat when JYOTISHGANIT_HIP_MAIN_DAT is set (before jyotishganit import)
+import jyotishganit_mcp._patch_skyfield  # noqa: E402
+
 from datetime import datetime
 from typing import TYPE_CHECKING
 

@@ -19,6 +19,7 @@ def main() -> None:
     hip_main_dat = os.path.join(repo_root, "hip_main.dat")
 
     data["mcpServers"]["jyotishganit"] = {
+        "type": "stdio",
         "command": sys.executable,
         "args": ["-m", "jyotishganit_mcp"],
         "env": {"JYOTISHGANIT_HIP_MAIN_DAT": hip_main_dat},
