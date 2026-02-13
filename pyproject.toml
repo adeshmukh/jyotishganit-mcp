@@ -11,7 +11,7 @@ requires-python = ">=3.10"
 license = "MIT"
 dependencies = [
     "mcp>=1.0",
-    "jyotishganit>=0.1.2",
+    "jyotishganit @ git+https://github.com/adeshmukh/jyotishganit.git@main",
 ]
 
 [project.scripts]
@@ -25,6 +25,9 @@ dev = [
     "ruff>=0.1.0",
     "mypy>=1.0",
 ]
+
+[tool.hatch.metadata]
+allow-direct-references = true
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/jyotishganit_mcp"]

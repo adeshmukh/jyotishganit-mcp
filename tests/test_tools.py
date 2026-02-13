@@ -96,6 +96,16 @@ def test_get_divisional_chart_d9_returns_houses_and_planets() -> None:
     assert "ascendant" in result or "houses" in result
     if "houses" in result:
         assert len(result["houses"]) == 12
+    # GitHub jyotishganit@main includes degrees in divisional charts
+    if "ascendant" in result and "signDegrees" in result["ascendant"]:
+        assert isinstance(result["ascendant"]["signDegrees"], (int, float))
+    occupants_with_degrees = []
+    for house in result.get("houses", []):
+        for occ in house.get("occupants", []):
+            if "signDegrees" in occ:
+                occupants_with_degrees.append(occ)
+    if occupants_with_degrees:
+        assert isinstance(occupants_with_degrees[0]["signDegrees"], (int, float))
 
 
 def test_get_divisional_chart_invalid_code_returns_error() -> None:
